@@ -5,10 +5,9 @@
   "main": "benchMark.js",
   "type": "module",
   "scripts": {
-    "dev": "node src/main.js",
+    "start": "node src/main.js",
     "watch": "nodemon src/main.js -e ejs,html,js,json",
-    "test": "node benchmark.js",
-    "start": "0x ./src/main.js"
+    "test": "node benchmark.js"
   },
   "keywords": [],
   "author": "",
