@@ -1,0 +1,40 @@
+CommandLine 01 (PowerShell)
+>> node --prof ./src/main.js
+CTRL + C
+
+File
+Rename the *-v8.log file to console_result-v8.log
+
+CommandLine 01 (PowerShell)
+>> node --prof-process console_result-v8.log > console_result_prof_v8.txt
+>> node ./src/main.js
+
+CommandLine 02 (Git Bash)
+>> artillery quick --count 50 -n 20 "http://localhost:8080/info" > console_result_info.txt
+
+CommandLine 01 (PowerShell)
+CTRL + C
+>> npm start
+
+CommandLine 02 (Git Bash)
+>> npm run test
+
+CommandLine 01 (PowerShell)
+CTRL + C
+CTRL + C
+>> node --inspect ./src/main.js
+
+Edge
+edge://inspect/
+start recording
+
+CommandLine 02 (Git Bash)
+>> artillery quick --count 50 -n 20 "http://localhost:8080/info"
+
+Edge
+stop recording
+
+CommandLine 01 (PowerShell)
+CTRL + C
+
+Comentar línea 37 de info.js y repetir pruebas

@@ -1,0 +1,5 @@
+pm2 start ./src/main.js --name="server1" --watch -- -p=8081 -m=cluster
+pm2 start ./src/main.js --name="server2" --watch -- -p=8082 -m=fork
+pm2 start ./src/main.js --name="server3" --watch -- -p=8083 -m=fork
+pm2 start ./src/main.js --name="server4" --watch -- -p=8084 -m=fork
+pm2 start ./src/main.js --name="server5" --watch -- -p=8085 -m=fork
