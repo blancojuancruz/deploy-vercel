@@ -133,25 +133,33 @@ app.get('*', (req, res) => {
   res.send('Route not implemented')
 })
 
-conectDB(config.mongoDb.mongoDbUrl, (err) => {
-  if (err) return console.log('Database connection error', err)
-  console.log('Database connected')
+// conectDB(config.mongoDb.mongoDbUrl, (err) => {
+//   if (err) return console.log('Database connection error', err)
+//   console.log('Database connected')
 
-  if (cluster.isPrimary && config.server.MODE === 'CLUSTER') {
-    for (let i = 0; i < cpu; i++) {
-      cluster.fork()
-    }
+//   if (cluster.isPrimary && config.server.MODE === 'CLUSTER') {
+//     for (let i = 0; i < cpu; i++) {
+//       cluster.fork()
+//     }
 
-    cluster.on('exit', (worker, code, signal) => {
-      console.log(`Work ${worker.process.pid} died`)
-      cluster.fork()
-    })
-  } else {
-    httpServer.listen(config.server.PORT, (err) => {
-      if (err) return console.log(`Server error ${err}`)
-      console.log(
-        `Server http running on port ${config.server.PORT} - PID ${process.pid}`
-      )
-    })
-  }
+//     cluster.on('exit', (worker, code, signal) => {
+//       console.log(`Work ${worker.process.pid} died`)
+//       cluster.fork()
+//     })
+//   } else {
+//     httpServer.listen(config.server.PORT, (err) => {
+//       if (err) return console.log(`Server error ${err}`)
+//       console.log(
+//         `Server http running on port ${config.server.PORT} - PID ${process.pid}`
+//       )
+//     })
+//   }
+// })
+
+const PORT = process.env.PORT || 3000
+
+httpServer.listen(config.server.PORT, (err) => {
+  console.log(`Server http running on port ${PORT} - PID ${process.pid}`)
+
+  if (err) return console.log(`Server error ${err}`)
 })
