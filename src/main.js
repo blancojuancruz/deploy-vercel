@@ -16,6 +16,7 @@ import { Server as Socket } from 'socket.io'
 import config from './config.js'
 import { conectDB } from './controllers.js'
 import { User } from './model.js'
+conectDB(config.mongoDb.mongoDbUrl, console.log)
 
 import authWebRouter from './routers/web/auth.js'
 import productsWebRouter from './routers/web/home.js'
@@ -24,7 +25,6 @@ import infoWebRouter from './routers/web/info.js'
 
 import addProductsHandlers from './routers/ws/products.js'
 import addMessagesHandlers from './routers/ws/messages.js'
-const cpu = cpus().length
 
 dotenv.config()
 
