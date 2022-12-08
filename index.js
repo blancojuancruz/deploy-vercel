@@ -5,7 +5,7 @@ import dotenv from 'dotenv'
 
 import cluster from 'cluster'
 import { cpus } from 'os'
-import { logger } from './log/log.js'
+import { logger } from './src/log/log.js'
 
 import passport from 'passport'
 import { Strategy as LocalStrategy } from 'passport-local'
@@ -13,17 +13,17 @@ import { Strategy as LocalStrategy } from 'passport-local'
 import { Server as HttpServer } from 'http'
 import { Server as Socket } from 'socket.io'
 
-import config from './config.js'
-import { conectDB } from './controllers.js'
-import { User } from './model.js'
+import config from './src/config.js'
+import { conectDB } from './src/controllers.js'
+import { User } from './src/model.js'
 
-import authWebRouter from './routers/web/auth.js'
-import productsWebRouter from './routers/web/home.js'
-import productsApiRouter from './routers/api/prod.js'
-import infoWebRouter from './routers/web/info.js'
+import authWebRouter from './src/routers/web/auth.js'
+import productsWebRouter from './src/routers/web/home.js'
+import productsApiRouter from './src/routers/api/prod.js'
+import infoWebRouter from './src/routers/web/info.js'
 
-import addProductsHandlers from './routers/ws/products.js'
-import addMessagesHandlers from './routers/ws/messages.js'
+import addProductsHandlers from './src/routers/ws/products.js'
+import addMessagesHandlers from './src/routers/ws/messages.js'
 const cpu = cpus().length
 
 dotenv.config()
@@ -133,33 +133,25 @@ app.get('*', (req, res) => {
   res.send('Route not implemented')
 })
 
-// conectDB(config.mongoDb.mongoDbUrl, (err) => {
-//   if (err) return console.log('Database connection error', err)
-//   console.log('Database connected')
+conectDB(config.mongoDb.mongoDbUrl, (err) => {
+  if (err) return console.log('Database connection error', err)
+  console.log('Database connected')
 
-//   if (cluster.isPrimary && config.server.MODE === 'CLUSTER') {
-//     for (let i = 0; i < cpu; i++) {
-//       cluster.fork()
-//     }
+  if (cluster.isPrimary && config.server.MODE === 'CLUSTER') {
+    for (let i = 0; i < cpu; i++) {
+      cluster.fork()
+    }
 
-//     cluster.on('exit', (worker, code, signal) => {
-//       console.log(`Work ${worker.process.pid} died`)
-//       cluster.fork()
-//     })
-//   } else {
-//     httpServer.listen(config.server.PORT, (err) => {
-//       if (err) return console.log(`Server error ${err}`)
-//       console.log(
-//         `Server http running on port ${config.server.PORT} - PID ${process.pid}`
-//       )
-//     })
-//   }
-// })
-
-const PORT = process.env.PORT || 3000
-
-httpServer.listen(config.server.PORT, (err) => {
-  console.log(`Server http running on port ${PORT} - PID ${process.pid}`)
-
-  if (err) return console.log(`Server error ${err}`)
+    cluster.on('exit', (worker, code, signal) => {
+      console.log(`Work ${worker.process.pid} died`)
+      cluster.fork()
+    })
+  } else {
+    httpServer.listen(config.server.PORT, (err) => {
+      if (err) return console.log(`Server error ${err}`)
+      console.log(
+        `Server http running on port ${config.server.PORT} - PID ${process.pid}`
+      )
+    })
+  }
 })
