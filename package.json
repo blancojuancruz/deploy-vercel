@@ -2,10 +2,13 @@
   "name": "dividircapas",
   "version": "1.0.0",
   "description": "",
-  "main": "benchMark.js",
+  "main": "src/main.js",
   "type": "module",
   "scripts": {
-    "start": "node index.js"
+    "start": "node src/main.js",
+    "watch": "nodemon src/main.js -e ejs,html,js,json",
+    "test": "node benchmark.js",
+    "/start": "0x ./src/main.js"
   },
   "keywords": [],
   "author": "",
