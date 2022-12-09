@@ -7,11 +7,11 @@ const __dirname = path.resolve()
 
 let sessionName
 
-// authWebRouter.get('/', (request, response) => {
-//   response.send('Express server ready')
-// })
-
 authWebRouter.get('/', (request, response) => {
+  response.send('Express server ready')
+})
+
+authWebRouter.get('/login', (request, response) => {
   if (request.isAuthenticated()) {
     request.session.userName = request.user.username
     response.redirect('/home')
