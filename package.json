@@ -5,10 +5,10 @@
   "main": "src/main.js",
   "type": "module",
   "scripts": {
-    "start": "node src/main.js",
+    "start": "node index.js",
     "watch": "nodemon src/main.js -e ejs,html,js,json",
     "test": "node benchmark.js",
-    "/start": "0x ./src/main.js"
+    "/start": "0x index.js"
   },
   "keywords": [],
   "author": "",
