@@ -20,14 +20,12 @@ conectDB(config.mongoDb.mongoDbUrl, console.log)
 import authWebRouter from './routers/web/auth.js'
 import productsWebRouter from './routers/web/home.js'
 import productsApiRouter from './routers/api/prod.js'
-// import randomApiRouter from "./routers/api/randoms.js";
 import infoWebRouter from './routers/web/info.js'
 
 import addProductsHandlers from './routers/ws/products.js'
 import addMessagesHandlers from './routers/ws/messages.js'
 import { logger } from './log/log.js'
 
-// Passport
 passport.use(
   'signup',
   new LocalStrategy(
@@ -93,23 +91,14 @@ const isValidPassword = (user, password) => {
   return bCrypt.compareSync(password, user.password)
 }
 
-//--------------------------------------------
-// instancio servidor, socket y api
-
 const app = express()
 const httpServer = new HttpServer(app)
 const io = new Socket(httpServer)
-
-//--------------------------------------------
-// configuro el socket
 
 io.on('connection', async (socket) => {
   addProductsHandlers(socket, io.sockets)
   addMessagesHandlers(socket, io.sockets)
 })
-
-//--------------------------------------------
-// configuro el servidor
 
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
@@ -120,7 +109,8 @@ app.set('view engine', 'ejs')
 app.use(
   session({
     store: MongoStore.create({
-      mongoUrl: config.mongoDb.mongoDbUrl,
+      mongoUrl:
+        'mongodb+srv://dbJB:1711Canch.@cluster0.b4nf2gp.mongodb.net/?retryWrites=true&w=majority',
       mongoOptions: config.mongoDb.ADVANCED_OPTIONS,
       ttl: 60
     }),
@@ -136,13 +126,7 @@ app.use(
 
 app.use(passport.initialize())
 app.use(passport.session())
-
-//--------------------------------------------
-// rutas del servidor API REST
 app.use('', productsApiRouter)
-// app.use("", randomApiRouter);
-//--------------------------------------------
-// rutas del servidor web
 app.use('', authWebRouter)
 app.use('', productsWebRouter)
 app.use('', infoWebRouter)
@@ -150,30 +134,6 @@ app.get('*', (req, res) => {
   logger.warn('Route not implemented')
   res.send('Route not implemented')
 })
-//--------------------------------------------
-// inicio el servidor
-// conectDB(config.mongoDb.DATA_BASE_URL, (err) => {
-//   if (err) return console.log("Database connection error", err);
-//   console.log("Database connected");
-
-//   if (cluster.isPrimary && config.server.MODE === "CLUSTER") {
-//     for (let i = 0; i < numCpu; i++) {
-//       cluster.fork();
-//     }
-
-//     cluster.on("exit", (worker, code, signal) => {
-//       console.log(`Work ${worker.process.pid} died`);
-//       cluster.fork();
-//     });
-//   } else {
-//     httpServer.listen(config.server.PORT, (err) => {
-//       if (err) return console.log(`Server error ${err}`);
-//       console.log(
-//         `Server http running on port ${config.server.PORT} - PID ${process.pid}`
-//       );
-//     });
-//   }
-// });
 
 if (cluster.isPrimary && config.server.MODE === 'CLUSTER') {
   for (let i = 0; i < numCpu; i++) {
