@@ -30,11 +30,13 @@ export default {
     path: process.env.FILESYSTEM_PATH
   },
   mongoDb: {
+    EXPIRATION_TIME: parseInt(process.env.MONGODB_EXPIRATION),
     mongoDbUrl: process.env.MONGODB_DATA_BASE_URL,
-    mongoDbExpiration: process.env.MONGODB_EXPIRATION
+    mongoDbExpiration: process.env.MONGODB_EXPIRATION,
+    ADVANCED_OPTIONS: { useNewUrlParser: true, useUnifiedTopology: true }
   },
   server: {
-    PORT: args.p,
+    PORT: process.env.PORT || 3000,
     MODE: args.m.toUpperCase()
   }
 }
