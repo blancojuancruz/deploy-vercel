@@ -36,7 +36,7 @@ export default {
     ADVANCED_OPTIONS: { useNewUrlParser: true, useUnifiedTopology: true }
   },
   server: {
-    PORT: process.env.PORT || 3000,
+    PORT: process.env.PORT || 8080,
     MODE: args.m.toUpperCase()
   }
 }
