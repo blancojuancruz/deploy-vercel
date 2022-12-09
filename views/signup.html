@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <title>Sign up</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"
+      integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="css/styles.css" />
+  </head>
+
+  <body>
+    <div class="container my-5">
+      <div class="jumbotron">
+        <h1>Sign up</h1>
+        <br />
+        <form action="/signup" method="post" autocomplete="off">
+          <div class="form-group">
+            <input
+              name="username"
+              placeholder="Name"
+              class="form-control"
+              type="text"
+              required
+            />
+          </div>
+          <div class="form-group">
+            <input
+              name="password"
+              placeholder="Password"
+              class="form-control"
+              type="password"
+              required
+            />
+          </div>
+          <div class="form-group">
+            <input class="btn btn-success my-3" type="submit" value="Sign up" />
+          </div>
+        </form>
+        <hr>
+        <div class="text-center"></div>
+          <button class="btn btn-success my-3" onclick="loginRedirect()">Login</button>
+        </div>
+      </div>
+    </div>
+    <script>
+      const redirect = (page) => {
+        location.href = page;
+      }
+  
+      const loginRedirect = () => {
+        redirect('/login');
+      }
+    </script>
+  </body>
+</html>
